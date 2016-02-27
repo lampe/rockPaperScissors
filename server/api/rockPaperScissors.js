@@ -13,7 +13,7 @@ RoPaSc.wrongApiCall = () => {
   const error = {
     statusCode: 400,
     body: {
-      error: 'Please us the api as follows: /api/move/rock'
+      error: 'Please us the api as follows: /api/move/ and attach a json object to the body like {move:rock}'
     }
   };
   return error;
@@ -31,35 +31,32 @@ RoPaSc.getWinner = (move) => {
   return RoPaSc.wrongApiCall();
 };
 RoPaSc.addRoute('', {
-  get() {
+  post() {
     return RoPaSc.wrongApiCall();
   }
 });
 RoPaSc.addRoute('*', {
-  get() {
+  post() {
     return RoPaSc.wrongApiCall();
   }
 });
 RoPaSc.addRoute('move', {
-  get() {
-    return RoPaSc.wrongApiCall();
-  }
-});
-RoPaSc.addRoute('move/:move', {
-  get() {
-    if (this.urlParams.move) {
-      const move = {};
-      move.player = this.urlParams.move.toString().toLowerCase();
-      if (RoPaSc.isValidMove(move.player)) {
-        move.computer = RoPaSc.getRandomMove();
-        const winner = RoPaSc.getWinner(move);
-        return {
-          statusCode: 200,
-          body: {
-            move,
-            winner
-          }
-        };
+  post() {
+    if (this.request.headers['content-type'] === 'application/json') {
+      if (this.bodyParams.move) {
+        const move = {};
+        move.player = this.bodyParams.move.toString().toLowerCase();
+        if (RoPaSc.isValidMove(move.player)) {
+          move.computer = RoPaSc.getRandomMove();
+          const winner = RoPaSc.getWinner(move);
+          return {
+            statusCode: 200,
+            body: {
+              move,
+              winner
+            }
+          };
+        }
       }
     }
     return RoPaSc.wrongApiCall();
