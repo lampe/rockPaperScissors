@@ -1,6 +1,5 @@
 RoPaSc = new Restivus({
-  prettyJson: true,
-  defaultOptionsEndpoint: 'wrongPath'
+  prettyJson: true
 });
 RoPaSc.allowedMoves = ['rock', 'paper', 'scissors'];
 RoPaSc.winningMoves = {
@@ -31,6 +30,21 @@ RoPaSc.getWinner = (move) => {
   }
   return RoPaSc.wrongApiCall();
 };
+RoPaSc.addRoute('', {
+  get() {
+    return RoPaSc.wrongApiCall();
+  }
+});
+RoPaSc.addRoute('*', {
+  get() {
+    return RoPaSc.wrongApiCall();
+  }
+});
+RoPaSc.addRoute('move', {
+  get() {
+    return RoPaSc.wrongApiCall();
+  }
+});
 RoPaSc.addRoute('move/:move', {
   get() {
     if (this.urlParams.move) {
@@ -38,10 +52,12 @@ RoPaSc.addRoute('move/:move', {
       move.player = this.urlParams.move.toString().toLowerCase();
       if (RoPaSc.isValidMove(move.player)) {
         move.computer = RoPaSc.getRandomMove();
+        const winner = RoPaSc.getWinner(move);
         return {
           statusCode: 200,
           body: {
-            move
+            move,
+            winner
           }
         };
       }
