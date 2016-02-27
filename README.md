@@ -29,3 +29,8 @@ $ ./chromedriver
 #in a third tab/terminal
 $ gagarin -B -m -c
 ```
+
+## License
+
+MIT License. See [LICENSE](https://github.com/lampe/rockPaperScissors/blob/master/LICENSE) for
+details.
