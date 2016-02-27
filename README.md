@@ -10,11 +10,11 @@ $ meteor
 
 ```bash
 #rock
-curl --header "Accept:application/json" http://localhost:3000/api/move/rock
+curl -H "Content-Type: application/json" -X GET -d '{"move":"rock"}' http://localhost:3000/api/move
 #paper
-curl --header "Accept:application/json" http://localhost:3000/api/move/paper
+curl -H "Content-Type: application/json" -X GET -d '{"move":"paper"}' http://localhost:3000/api/move
 #scissors
-curl --header "Accept:application/json" http://localhost:3000/api/move/paper
+curl -H "Content-Type: application/json" -X GET -d '{"move":"scissors"}' http://localhost:3000/api/move
 ```
 # Testing
 you have to download the latest ChromeDriver
