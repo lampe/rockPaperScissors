@@ -46,7 +46,6 @@ describe('Rock Paper Scissors Rest Api - Server', function () {
         });
       });
     });
-
     describe('- RoPaSc functions', function () {
       it('randoMmove should have be function', function () {
         return server.execute(function () {
@@ -78,8 +77,23 @@ describe('Rock Paper Scissors Rest Api - Server', function () {
           expect(wrongApiCall.statusCode).to.equal(400);
         });
       });
-
+      it('isValidMove with paper should be a valid move', function () {
+        return server.execute(function () {
+          expect( RoPaSc.isValidMove("paper")).to.be.true;
+        });
+      });
+      it('isValidMove with rock should be a valid move', function () {
+        return server.execute(function () {
+          expect( RoPaSc.isValidMove("rock")).to.be.true;
+        });
+      });
+      it('isValidMove with scissors should be a valid move', function () {
+        return server.execute(function () {
+          expect( RoPaSc.isValidMove("scissors")).to.be.true;
+        });
+      });
       describe('- winning function', function () {
+
         it('Player has rock and Computer has paper - Computer Should win.', function () {
           return server.execute(function () {
             var move = {
