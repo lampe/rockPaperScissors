@@ -23,7 +23,6 @@ describe('Rock Paper Scissors Rest Api - Server', function () {
         expect(RoPaSc).not.to.be.empty;
       });
     });
-
     describe('- RoPaSc properties', function () {
       it('the allowed moves should be a Array', function () {
         return server.execute(function () {
@@ -92,7 +91,12 @@ describe('Rock Paper Scissors Rest Api - Server', function () {
           expect(RoPaSc.isValidMove("scissors")).to.be.true;
         });
       });
-      describe('- winning function', function () {
+      it('isValidMove with brunnen should be a valid move', function () {
+        return server.execute(function () {
+          expect(RoPaSc.isValidMove("brunnen")).to.be.true;
+        });
+      });
+      describe('- getWinner function', function () {
         it('Player has rock and Computer has paper - Computer Should win.', function () {
           return server.execute(function () {
             var move = {
@@ -201,6 +205,113 @@ describe('Rock Paper Scissors Rest Api - Server', function () {
             };
             var winner = RoPaSc.getWinner(move);
             expect(winner).to.be.equal("drawn");
+          });
+        });
+        it('Player has brunnen and Computer has brunnen - should be a drawn.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'brunnen',
+              computer: 'brunnen'
+            };
+            var winner = RoPaSc.getWinner(move);
+            expect(winner).to.be.equal("drawn");
+          });
+        });
+        it('Player has brunnen and Computer has rock - Player Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'brunnen',
+              computer: 'rock'
+            };
+            var winner = RoPaSc.getWinner(move);
+            expect(winner).to.be.equal("player");
+          });
+        });
+        it('Player has paper and Computer has brunnen - Player Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'paper',
+              computer: 'brunnen'
+            };
+            var winner = RoPaSc.getWinner(move);
+            expect(winner).to.be.equal("player");
+          });
+        });
+        it('Player has brunnen and Computer has rock - Player Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'brunnen',
+              computer: 'rock'
+            };
+            var winner = RoPaSc.getWinner(move);
+            expect(winner).to.be.equal("player");
+          });
+        });
+      });
+      describe('- getWinnerIfOneIsBrunnen function', function () {
+        it('getWinnerIfOneIsBrunnen should be a function', function () {
+          return server.execute(function () {
+            expect(RoPaSc.getWinnerIfOneIsBrunnen).to.be.a.function;
+          });
+        });
+        it('Player has brunnen and Computer has rock - Player Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'brunnen',
+              computer: 'rock'
+            };
+            var winner = RoPaSc.getWinnerIfOneIsBrunnen(move);
+            expect(winner).to.be.equal("player");
+          });
+        });
+        it('Player has brunnen and Computer has scissors - Player Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'brunnen',
+              computer: 'scissors'
+            };
+            var winner = RoPaSc.getWinnerIfOneIsBrunnen(move);
+            expect(winner).to.be.equal("player");
+          });
+        });
+        it('Player has brunnen and Computer has paper - Computer Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'brunnen',
+              computer: 'computer'
+            };
+            var winner = RoPaSc.getWinnerIfOneIsBrunnen(move);
+            expect(winner).to.be.equal("computer");
+          });
+        });
+        it('Player has rock and Computer has brunnen - Computer Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'rock',
+              computer: 'brunnen'
+            };
+            var winner = RoPaSc.getWinnerIfOneIsBrunnen(move);
+            expect(winner).to.be.equal("computer");
+          });
+        });
+        it('Player has scissors and Computer has brunnen - Computer Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'scissors',
+              computer: 'brunnen'
+            };
+            var winner = RoPaSc.getWinnerIfOneIsBrunnen(move);
+            expect(winner).to.be.equal("computer");
+          });
+        });
+        it('Player has paper and Computer has brunnen - Player Should win.', function () {
+          return server.execute(function () {
+            var move = {
+              player: 'paper',
+              computer: 'brunnen'
+            };
+            var winner = RoPaSc.getWinnerIfOneIsBrunnen(move);
+            expect(winner).to.be.equal("player");
           });
         });
       });

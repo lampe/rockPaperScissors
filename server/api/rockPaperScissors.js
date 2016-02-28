@@ -1,7 +1,7 @@
 RoPaSc = new Restivus({
   prettyJson: true
 });
-RoPaSc.allowedMoves = ['rock', 'paper', 'scissors'];
+RoPaSc.allowedMoves = ['rock', 'paper', 'scissors', 'brunnen'];
 RoPaSc.winningMoves = {
   rock: 'scissors',
   paper: 'rock',
@@ -23,6 +23,9 @@ RoPaSc.getWinner = (move) => {
     if (move.player === move.computer) {
       return 'drawn';
     }
+    if (move.player === 'brunnen' || move.computer === 'brunnen') {
+      return RoPaSc.getWinnerIfOneIsBrunnen(move);
+    }
     if (move.computer === RoPaSc.winningMoves[move.player]) {
       return 'player';
     }
@@ -30,6 +33,22 @@ RoPaSc.getWinner = (move) => {
   }
   return RoPaSc.wrongApiCall();
 };
+RoPaSc.getWinnerIfOneIsBrunnen = (move) => {
+  if (move.player === 'brunnen') {
+    if (move.computer === 'rock' || move.computer === 'scissors') {
+      return 'player';
+    }
+    return 'computer';
+  }
+  if (move.computer === 'brunnen') {
+    if (move.player === 'rock' || move.player === 'scissors') {
+      return 'computer';
+    }
+    return 'player';
+  }
+  return RoPaSc.wrongApiCall();
+};
+
 RoPaSc.addRoute('', {
   post() {
     return RoPaSc.wrongApiCall();
